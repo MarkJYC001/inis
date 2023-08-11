@@ -1,0 +1,76 @@
+
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: #ffffffcc;
+  margin: 0 auto;
+}
+#header{
+  color: purple;
+  font: 100px;
+  position:fixed;
+  display:fixed;
+  text-align: center;
+  width:100%;
+  height: 10%;
+  margin: 0 auto;
+}
+
+#left-bar {
+  top:10%;
+  display:none;
+  position:fixed;
+  width: 20%;
+  height: 90%;
+  text-align:center;
+  float:left;
+  flex-direction: column;
+  /*Necccessary to be flex and flex direction to appear and disappear*/
+  background: #04d9ff; /*following RGB*/
+  /*visibility:hidden;*/
+  z-index:10;
+}
+#canvas {
+  top:10%;
+  position:fixed;
+  width: 100%;
+  height: 90%;
+ /* background: #555555;*/
+  margin: 0 auto;
+  z-index:0;
+}
+#Chatbox{
+  position:fixed;
+  display:none;
+  justify-content:center;
+  float:right;
+  /*float is an attribute about content inside the box*/
+  width:60%;
+  height:15%;
+  /*background:#FFFFFF;*/
+  top:80%;/*leave some space*/
+  left:20%;
+  
+}
+textarea { font-size: 30px; }
+
+
+
+#billboard{
+  display:none;
+  text-align:center;
+  flex-direction: column;
+  position:fixed;
+  width:80%;
+  height:100%;
+  left:20%;
+  z-index:10;
+  background: #eeffff;
+  /*Can be tansparancy if you delete this background attribute */ 
+}
+
+
+
+

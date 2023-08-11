@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ignis Forum</title>
+  
+  <link rel="stylesheet" href="/style.css">
+  <!-- socket.io -->
+  <script src="/socket.io/socket.io.js"></script>
+  <!-- p5.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.min.js"></script>
+
+  
+  <!--Here is a setting-->
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<!--<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>-->
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  
+  
+  
+
+
+  <!-- main script -->
+  <script defer src="/script.js"></script>
+</head>
+
+<body>
+  
+  <!-- First of all here is a moudle import -->
+   <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js'
+
+    // If you enabled Analytics in your project, add the Firebase SDK for Google Analytics
+    import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js'
+
+    // Add Firebase products that you want to use
+    import { getAuth } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js'
+    import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js'
+  </script>
+  
+  
+  
+  
+  <div id = "header"><h1>The Ignis Forum</h1></div>
+
+  <div id ="left-bar">
+        <!--This is a left bar-->
+        <div id="head-img">
+          <!-- an akward way of having a blank-->
+          <img
+            src="https://cdn.glitch.global/cdd0b244-9ede-454e-87bb-4cf77ff6c14f/bd315c6034a85edf8db137bdc11b1e23dd54564edf57.png?v=1688041108594"
+            width="60"
+            height="60"
+          /><br />
+          <h>USERNAME</h>
+        </div>
+        <!--Here all that starts with hr is only a line-->
+        <div id="Search">
+          <hr
+            style="
+              filter: progid:DXImageTransform.Microsoft.Glow ( color= #987cb9 ,strength = 10);
+            "
+            width="100%"
+            color="#000000"
+            size="1.5"
+          />
+
+          <input type="text" placeholder="Exploring more!!!" />
+          <script></script>
+          <!--I have no idea what to write in the script, but hopefully can be connected to data-->
+          <hr
+            style="
+              filter: progid:DXImageTransform.Microsoft.Glow ( color= #987cb9 ,strength = 10);
+            "
+            width="100%"
+            color="#00000f"
+            size="1"
+          />
+        </div>
+        <!--EASIER for css to put into divs-->
+        <div id="Paths">
+          <a href="#">
+            <img
+              src="https://cdn.glitch.global/cdd0b244-9ede-454e-87bb-4cf77ff6c14f/navigation.png?v=1688089369087"
+              width="60"
+              height="60"
+            /><br/>
+
+            <h>MAP&Navigation</h></a
+          >
+
+          <hr
+            style="
+              filter: progid:DXImageTransform.Microsoft.Glow ( color= #987cb9 ,strength = 10);
+            "
+            width="100%"
+            color="#00000f"
+            size="1"
+          />
+          <a href="#">
+            <img
+              src="https://cdn.glitch.global/cdd0b244-9ede-454e-87bb-4cf77ff6c14f/WhatIsTaskBoard.jpg?v=1688089125453"
+              width="60"
+              height="60"
+            /><br />
+            <h>Billboard</h>
+          </a>
+          <hr
+            style="
+              filter: progid:DXImageTransform.Microsoft.Glow ( color= #987cb9 ,strength = 10);
+            "
+            width="100%"
+            color="#00000f"
+            size="1"
+          />
+          <a href="#">
+            <img
+              src="https://cdn.glitch.global/cdd0b244-9ede-454e-87bb-4cf77ff6c14f/comments2.png?v=1688088424553"
+              width="68.4"
+              height="59.2"
+            /><br />
+            <h>Comments</h>
+          </a>
+          <hr
+            style="
+              filter: progid:DXImageTransform.Microsoft.Glow ( color= #987cb9 ,strength = 10);
+            "
+            width="100%"
+            color="#00000f"
+            size="1"
+          />
+        </div>
+      </div>
+  <div id = "canvas"></div>
+
+  
+  <div id = "Chatbox">
+    <textarea id="Talks" font="30px" name="freeform" rows="10" cols="100"></textarea>
+  </div>
+  <!--Billboard block starts-->
+  
+  
+ <div  id = "billboard">
+   <div id = "billboard-header" style = "display: grid; grid-template-columns: 100px 1fr 50px; ">
+     
+     <div>
+        <button  id = "new-post-button" type="button" onclick="createNewPost()">
+        Create New Post
+        </button>
+       
+     </div>
+     
+     <div>
+       <h1>Here is a Huge billboard</h1>
+     </div>
+     
+
+    
+   </div>
+    
+   <hr
+            style="
+              filter: progid:DXImageTransform.Microsoft.Glow ( color= #987cb9 ,strength = 10);"
+            width="100%"
+            color="#000000"
+            size="1.5"
+          />
+   
+   
+   <div class = "new-post-creation" id = "new-post-creation" style = "display: grid; grid-template-rows: 1fr 7fr;" >
+     <div style = "display: grid; grid-template-columns: 1fr 50px;">
+       <div>
+         Create new post
+       </div>
+        <div>
+         <button id = "close-new-post-button" type="button" onclick="closeCreatePost()">
+           Close
+         </button>
+     </div>
+       
+     </div>
+     
+     
+     
+     <div style = "display: grid; grid-template-rows: 1fr 9fr;">
+       <input type = "text" placeholder = "Title">
+       <input type = "text" placeholder = "Content">
+     </div>
+     
+   </div>
+     
+   <style>
+     #billboard{
+       position: absolute;
+       top: 0;
+       z-index: 1;
+     }
+     
+     .new-post-creation{
+       height: 300px;
+       visibility: hidden;
+       z-index: 0;
+       background-color: rgb(96, 96, 96);
+     }
+     
+    .new-post-creation-active{
+       z-index: 9;
+       visibility: visible;
+     }
+     
+     
+   </style>
+   
+   
+     <script>
+    let newPost = document.getElementById("new-post-creation");
+    
+    function createNewPost(){
+      newPost.classList.add("new-post-creation-active")
+    }
+
+    function closeCreatePost(){
+      newPost.classList.remove("new-post-creation-active")
+    }
+  
+  </script>
+   
+   <div id = "billboard-main" 
+        style = "display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 300px 300px; " >
+     <div class = "single-post" style = "display: grid; grid-template-rows: 60px 70px 1fr;">
+       <div class = "post-title">
+         <h3>
+           Post title here
+         </h3>
+       </div>
+       
+       <div class = "post-author" style = "display: grid; grid-template-columns: 70px 1fr; ">
+         <div class = "post-author-profile" style = "background-color: yellow; border-radius: 40px; margin: 5px;">
+           Temp profile pic
+         </div>
+         
+         <div style = "display: grid; grid-template-columns: 1fr 200px; ">
+           <div class = "post-author-name">
+             temp author name   &#x2022;
+           </div>
+           
+           <div class = "post-publish-time">
+             <p>Published at: <span id="datetime"></span></p>
+
+              <script>
+              var dt = new Date();
+              document.getElementById("datetime").innerHTML = dt.toLocaleString();
+              </script>
+             
+           </div>
+           
+         </div>
+         
+       </div>
+       
+       <div class = "post-content">
+         
+         <hr
+            style="
+              filter: progid:DXImageTransform.Microsoft.Glow ( color= #987cb9 ,strength = 10);"
+            width="100%"
+            color="#000000"
+            size="1.5"
+          />
+         
+         <p>
+           Post content here (slice if too long)
+         </p>
+       </div>
+     </div>
+     
+     
+     
+     <div class = "single-post" style = "display: grid; grid-template-rows: 60px 70px 1fr;">
+       <div class = "post-title">
+         <h3>
+           Post title here
+         </h3>
+       </div>
+       
+       <div class = "post-author" style = "display: grid; grid-template-columns: 70px 1fr; ">
+         <div class = "post-author-profile" style = "background-color: yellow; border-radius: 40px; margin: 5px;">
+           Temp profile pic
+         </div>
+         
+         <div style = "display: grid; grid-template-columns: 1fr 200px; ">
+           <div class = "post-author-name">
+             temp author name   &#x2022;
+           </div>
+           
+           <div class = "post-publish-time">
+             <p>Published at: <span id="datetime"></span></p>
+
+              <script>
+              var dt = new Date();
+              document.getElementById("datetime").innerHTML = dt.toLocaleString();
+              </script>
+             
+           </div>
+           
+         </div>
+         
+       </div>
+       
+       <div class = "post-content">
+         
+         <hr
+            style="
+              filter: progid:DXImageTransform.Microsoft.Glow ( color= #987cb9 ,strength = 10);"
+            width="100%"
+            color="#000000"
+            size="1.5"
+          />
+         
+         <p>
+           Post content here (slice if too long)
+         </p>
+       </div>
+     </div>
+     
+     
+     
+     <div class = "single-post" style = "display: grid; grid-template-rows: 60px 70px 1fr;">
+       <div class = "post-title">
+         <h3>
+           Post title here
+         </h3>
+       </div>
+       
+       <div class = "post-author" style = "display: grid; grid-template-columns: 70px 1fr; ">
+         <div class = "post-author-profile" style = "background-color: yellow; border-radius: 40px; margin: 5px;">
+           Temp profile pic
+         </div>
+         
+         <div style = "display: grid; grid-template-columns: 1fr 200px; ">
+           <div class = "post-author-name">
+             temp author name   &#x2022;
+           </div>
+           
+           <div class = "post-publish-time">
+             <p>Published at: <span id="datetime"></span></p>
+
+              <script>
+              var dt = new Date();
+              document.getElementById("datetime").innerHTML = dt.toLocaleString();
+              </script>
+             
+           </div>
+           
+         </div>
+         
+       </div>
+       
+       <div class = "post-content">
+         
+         <hr
+            style="
+              filter: progid:DXImageTransform.Microsoft.Glow ( color= #987cb9 ,strength = 10);"
+            width="100%"
+            color="#000000"
+            size="1.5"
+          />
+         
+         <p>
+           Post content here (slice if too long)
+         </p>
+       </div>
+     </div>
+     
+     <div class = "single-post" style = "display: grid; grid-template-rows: 60px 70px 1fr;">
+       <div class = "post-title">
+         <h3>
+           Post title here
+         </h3>
+       </div>
+       
+       <div class = "post-author" style = "display: grid; grid-template-columns: 70px 1fr; ">
+         <div class = "post-author-profile" style = "background-color: yellow; border-radius: 40px; margin: 5px;">
+           Temp profile pic
+         </div>
+         
+         <div style = "display: grid; grid-template-columns: 1fr 200px; ">
+           <div class = "post-author-name">
+             temp author name   &#x2022;
+           </div>
+           
+           <div class = "post-publish-time">
+             <p>Published at: <span id="datetime"></span></p>
+
+              <script>
+              var dt = new Date();
+              document.getElementById("datetime").innerHTML = dt.toLocaleString();
+              </script>
+             
+           </div>
+           
+         </div>
+         
+       </div>
+       
+       <div class = "post-content">
+         
+         <hr
+            style="
+              filter: progid:DXImageTransform.Microsoft.Glow ( color= #987cb9 ,strength = 10);"
+            width="100%"
+            color="#000000"
+            size="1.5"
+          />
+         
+         <p>
+           Post content here (slice if too long)
+         </p>
+       </div>
+     </div>
+     
+     
+   </div>
+   
+  </div>
+  
+    
+  <style>
+    
+    #billboard-main{
+      position: absolute;
+      top: 100px;
+    }
+    
+    
+    .single-post{
+      background-color: rgb(222, 207, 243);
+      border-radius: 9px;
+      margin: 5px;
+    }
+    
+    .post-title{
+      font-size: 22px;
+      font-weight: bold;
+      font-family: Georgia;
+      margin: auto;
+    }
+    
+    .post-content{
+      font-size: 16px;
+      font-weight: 300;
+      pading-left: 2px;
+      padding-right: 2px;
+      
+    }
+    
+    .post-author-name{
+      margin: auto;
+      text-align: center;
+      font-weight: 600;
+      font-size: 14px;
+      
+    }
+    
+    .post-publish-time{
+      font-size: 10px;
+      margin: auto;
+    }
+    
+    
+  </style>
+    
+  
+  
+ 
+  
+  
+  <style>
+    
+    #open-billboard-button:hover {
+      background-color: rgb(41, 118, 211);
+      opacity: 0.7;
+    }
+    
+    #open-billboard-button:active {
+      opacity: 0.7;
+    }
+  
+    .billboard{
+      width: 800px;
+      visibility: hidden;
+      transform: scale(0.1);
+    }
+    
+    .open_billboard{
+      visibility: visible;
+      transform: scale(1);
+    }
+    
+    
+    #open-billboard-button{
+      color: red;
+      width: 100px;
+      transform: scale(1);
+    }
+    
+    
+  </style>
+  
+  
+ 
+  
+  
+  <!--Billboard block ends-->
+  
+  
+  
+</body>
+
+</html>
